@@ -1,0 +1,40 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}Liste des etudiants{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Liste des Etudiants ✅</h1>
+    <h4> <a href="{{ path('app_etudiant_add')}}">Ajouter Un Etudiant</a> </h4>
+    <table class="table">
+        <tr  class="table-primary">
+            <th>Nom</th>
+            <th>Prenom</th>
+            <th>Section</th>
+            <th>Action</th>
+        </tr>
+        {% for etudiant in etudiants %}
+            {%if loop.index % 2 ==1 %}
+                <tr  class="table-danger" onclick="change(this,'table-warning')" >
+            {%else%}
+                <tr  class="table-success" onclick="change(this,'table-success')">
+            {%endif%}
+
+            <td >{{etudiant.nom}}</td>
+            <td >{{etudiant.prenom}}</td>
+            <td >{%if etudiant.filiere is null %} Cet étudiant n'est pas encore affecté à une  section
+                {%else%} {{etudiant.filiere}}
+                {%endif%}
+            </td>
+            <td>
+                <a href="{{ path('app_etudiant_edit', {id: etudiant.id}) }}">Edit</a>
+                <a href="{{ path('app_etudiant_delete', {id: etudiant.id}) }}">Delete</a>
+
+            </td>
+
+            </tr>
+        {% endfor %}
+    </table>
+    </div>
+
+{% endblock %}
